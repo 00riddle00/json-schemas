@@ -6,7 +6,6 @@ from schematics.types.compound import ModelType, ListType
 
 __version__ = '1.0'
 
-
 SCHEMATIC_TYPE_TO_JSON_TYPE = {
     NumberType: 'number',
     IntType: 'integer',
@@ -28,21 +27,15 @@ schema_kwargs_to_schematics = {
     'maximum': 'max_value',
 }
 
-
-
 def jsonschema_for_fields_list(model):
-
     # i = 0
     properties = {}
     required = []
     # Loop over each field and either evict it or convert it
 
-
     # for field_name, field_instance in model._fields.iteritems():
 
-
     # for group
-
 
         # Break 3-tuple out
         # serialized_name = getattr(field_instance, 'serialized_name', None) or field_name
@@ -58,8 +51,6 @@ def jsonschema_for_fields_list(model):
         # Convert field as single model
         # if isinstance(field_instance, BaseType):
 
-
-
             # properties[serialized_name] = {
             #     "type": SCHEMATIC_TYPE_TO_JSON_TYPE.get(field_instance.__class__, 'string')
             # }
@@ -71,9 +62,7 @@ def jsonschema_for_fields_list(model):
 
     return properties, required
 
-
 def jsonschema_for_model_list(model, _type='object'):
-
     properties, required = jsonschema_for_fields_list(model)
 
     schema = {
@@ -96,23 +85,7 @@ def jsonschema_for_model_list(model, _type='object'):
 
     return schema
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def jsonschema_for_fields(model):
-
-
     i = 0
     properties = {}
     required = []
@@ -130,18 +103,12 @@ def jsonschema_for_fields(model):
                 properties[serialized_name] = jsonschema_for_model(field_instance.model_class, 'array')
                 # properties[serialized_name] = jsonschema_for_model(field_instance.__class__, 'array')
                 # properties[serialized_name] = jsonschema_for_model_list(field_instance, 'array')
-
-
-
             else:
-
-
                 # properties[serialized_name] = jsonschema_for_model(field_instance.field.__class__, 'array')
 
                 # properties[serialized_name] = {
                 #     "type": SCHEMATIC_TYPE_TO_JSON_TYPE.get(field_instance.field.__class__, 'string')
                 # }
-
 
                 # properties, required = jsonschema_for_fields(model)
 
@@ -189,9 +156,7 @@ def jsonschema_for_fields(model):
 
     return properties, required
 
-
 def jsonschema_for_model(model, _type='object'):
-
     properties, required = jsonschema_for_fields(model)
 
     schema = {
@@ -218,4 +183,3 @@ def jsonschema_for_model(model, _type='object'):
 def to_jsonschema(model):
     """Returns a representation of this schema class as a JSON schema."""
     return json.dumps(jsonschema_for_model(model))
-
